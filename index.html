@@ -53,6 +53,7 @@
       align-items: center;
       text-align: center;
       color: white;
+      background-image: none; /* prevent flash */
     }
     .hero video {
       position: absolute;
@@ -182,6 +183,10 @@
 
       setTimeout(() => {
         video.style.display = 'none';
+
+        // Force reflow
+        hero.offsetHeight;
+
         hero.style.backgroundImage = "url('images/_DSC7998n.jpg')";
         hero.style.backgroundSize = "cover";
         hero.style.backgroundPosition = "center";

@@ -181,9 +181,11 @@
       hero.classList.add('fade-in');
       setTimeout(() => {
         video.style.display = 'none';
-        hero.style.background = "url('images/_DSC7998n.jpg') center/cover no-repeat";
+        hero.style.backgroundImage = "url('images/_DSC7998n.jpg')";
         hero.style.backgroundSize = "cover";
         hero.style.backgroundPosition = "center";
+        hero.style.backgroundRepeat = "no-repeat";
+        hero.style.backgroundColor = "#fff";
       }, 1000);
     };
   </script>

@@ -72,8 +72,8 @@
       height: 100%;
       background: white;
       opacity: 0;
-      z-index: -1;
-      transition: opacity 1s ease-in;
+      z-index: 0;
+      transition: opacity 1s ease-in-out;
     }
     .hero.fade-in::after {
       opacity: 1;
@@ -179,6 +179,7 @@
     const hero = document.getElementById('hero');
     video.onended = () => {
       hero.classList.add('fade-in');
+
       setTimeout(() => {
         video.style.display = 'none';
         hero.style.backgroundImage = "url('images/_DSC7998n.jpg')";
@@ -186,6 +187,10 @@
         hero.style.backgroundPosition = "center";
         hero.style.backgroundRepeat = "no-repeat";
         hero.style.backgroundColor = "#fff";
+
+        setTimeout(() => {
+          hero.classList.remove('fade-in');
+        }, 1000);
       }, 1000);
     };
   </script>

@@ -26,7 +26,15 @@ exports.handler = async function (event, context) {
       }
     }
 
-    const deduped = [...new Set(unavailable)].sort();
+    // 🛠 Add your manual blockout dates here
+    const manuallyBlocked = [
+      "2025-06-01",
+      "2025-06-15",
+      "2025-07-01"
+    ];
+
+    const deduped = [...new Set([...unavailable, ...manuallyBlocked])].sort();
+
     return {
       statusCode: 200,
       body: JSON.stringify({ unavailable: deduped })

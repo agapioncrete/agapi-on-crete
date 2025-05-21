@@ -59,16 +59,35 @@
       background: rgba(255,255,255,0.95);
       border-radius: 12px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
     }
-    h1 {
-      color: #004d40;
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      font-size: 1rem;
+      margin-top: 1.5rem;
     }
-    p {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: #333;
+    .features span {
+      background: #e0f7fa;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+    .cta {
+      margin-top: 2rem;
+    }
+    .cta a {
+      display: inline-block;
+      background: #a9c9ff;
+      color: #002040;
+      padding: 0.8rem 2rem;
+      border-radius: 6px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .cta a:hover {
+      background: #88b7ff;
     }
     footer {
       text-align: center;
@@ -76,6 +95,26 @@
       background: #002040;
       color: white;
       font-family: 'Playfair Display', serif;
+    }
+    .gallery-placeholder {
+      background: #dbefff;
+      padding: 1rem;
+      margin: 2rem auto;
+      max-width: 1000px;
+      text-align: center;
+      border-radius: 12px;
+    }
+    .amenities {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+    .amenities div {
+      background: #f0f8ff;
+      padding: 0.8rem;
+      border-radius: 8px;
     }
   </style>
 </head>
@@ -102,6 +141,65 @@
         Whether you're watching the sunset over the sea or enjoying a quiet morning coffee surrounded by olive trees, Villa Agapi invites you to relax,
         recharge, and reconnect with nature.
       </p>
+      <div class="features">
+        <span>🏊 Private Pool</span>
+        <span>🌊 Sea View</span>
+        <span>🏛️ Nearby Tavernas</span>
+        <span>🛏️ Sun Terrace</span>
+        <span>🛋 Sleeps 6</span>
+        <span>🛁 2 Bathrooms</span>
+      </div>
+      <div class="cta">
+        <a href="booking.html">Book Now</a>
+      </div>
+    </div>
+
+    <div class="section">
+  <h2>Gallery</h2>
+  <div class="carousel" style="position: relative; max-width: 900px; margin: auto;">
+    <img id="carousel-image" src="images/villa1.jpg" alt="Villa image" style="width: 100%; border-radius: 12px;">
+    <button onclick="prevImage()" style="position: absolute; top: 50%; left: 0; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 0.5rem 1rem; cursor: pointer;">❮</button>
+    <button onclick="nextImage()" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 0.5rem 1rem; cursor: pointer;">❯</button>
+  </div>
+</div>
+
+<script>
+  const images = [
+    'images/villa1.jpg',
+    'images/villa2.jpg',
+    'images/villa3.jpg',
+    'images/villa4.jpg'
+  ];
+  let currentIndex = 0;
+
+  function showImage(index) {
+    const img = document.getElementById('carousel-image');
+    img.src = images[index];
+  }
+
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+    showImage(currentIndex);
+  }
+
+  function prevImage() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    showImage(currentIndex);
+  }
+</script>
+
+    <div class="section">
+      <h2>Amenities</h2>
+      <div class="amenities">
+        <div>🏠 Fully Equipped Kitchen</div>
+        <div>☀️ Air Conditioning</div>
+        <div>📱 High-Speed Wi-Fi</div>
+        <div>☕ Coffee Machine</div>
+        <div>🏊 Pool Towels</div>
+        <div>🚗 Private Parking</div>
+        <div>🚿 Bathtub & Shower</div>
+        <div>🛊 Washer</div>
+      </div>
     </div>
   </main>
 
@@ -110,4 +208,5 @@
   </footer>
 </body>
 </html>
+
 

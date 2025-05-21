@@ -1,54 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Booking</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Welcome to Villa Agapi - your peaceful retreat in Episkopi, Crete. Enjoy luxury, nature, and Mediterranean charm. Book your stay now.">
+  <meta name="keywords" content="Villa Agapi, Crete, Luxury Villa, Greek Villa, Vacation, Booking">
+  <meta property="og:title" content="Villa Agapi - Your Peaceful Retreat in Crete">
+  <meta property="og:description" content="Discover the charm and tranquility of Villa Agapi in Episkopi, Crete. Book your stay and experience Mediterranean luxury.">
+  <meta property="og:image" content="https://www.agapi-on-crete.com/images/villaagapi.jpg">
+  <meta property="og:url" content="https://www.agapi-on-crete.com">
+  <title>Villa Agapi | Booking</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Montserrat', sans-serif;
       margin: 0;
-      background: #f8f8f8;
+      background: linear-gradient(to bottom, #f4f9ff, #dbefff);
+      color: #2f3e46;
     }
-    header, footer {
-      background: #004d40;
+    header {
+      background: rgba(0, 51, 102, 0.8);
       color: white;
       text-align: center;
-      padding: 1rem;
+      padding: 1.5rem;
+      position: fixed;
+      width: 100%;
+      z-index: 10;
+      backdrop-filter: blur(5px);
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
     }
     nav a {
       color: white;
-      margin: 0 1rem;
       text-decoration: none;
+      font-weight: bold;
+      font-family: 'Playfair Display', serif;
+      position: relative;
     }
-    .form-container {
-      max-width: 600px;
-      margin: 2rem auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    nav a:hover {
+      color: #a9c9ff;
+    }
+    .section {
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+    }
+    .booking-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      max-width: 1000px;
+      margin: auto;
+      background: rgba(255,255,255,0.95);
+      padding: 3rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .form-section {
+      flex: 1;
+      min-width: 300px;
+    }
+    .summary-section {
+      flex: 0.8;
+      min-width: 250px;
+      background: #eaf6ff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      font-family: 'Playfair Display', serif;
     }
     label {
       display: block;
       margin: 1rem 0 0.5rem;
+      font-weight: 600;
     }
     input, textarea {
       width: 100%;
-      padding: 0.5rem;
+      padding: 0.6rem;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
+      font-family: 'Montserrat', sans-serif;
     }
     button {
-      margin-top: 1rem;
-      padding: 0.7rem 1.5rem;
-      background: #00695c;
-      color: white;
+      margin-top: 1.5rem;
+      padding: 0.8rem 2rem;
+      background-color: #a9c9ff;
+      color: #002040;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
     }
     button:hover {
-      background: #004d40;
+      background-color: #88b7ff;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #002040;
+      color: white;
+      font-family: 'Playfair Display', serif;
     }
   </style>
 </head>
@@ -63,29 +120,49 @@
     </nav>
   </header>
 
-  <div class="form-container">
+  <div class="section" style="margin-top: 120px;">
     <h2>Book Your Stay</h2>
-    <form action="https://formspree.io/f/mpwdnjqg" method="POST">
-      <input type="hidden" name="_next" value="https://www.agapi-on-crete.com/thank-you.html">
+    <div class="booking-container">
+      <div class="form-section">
+        <form id="booking-form">
+          <label for="checkin">Check-in:</label>
+          <input type="text" id="checkin" name="checkin" required />
 
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required>
+          <label for="checkout">Check-out:</label>
+          <input type="text" id="checkout" name="checkout" required />
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
+          <label for="guests">Guests:</label>
+          <input type="number" id="guests" name="guests" min="1" value="1" required />
 
-      <label for="dates">Preferred Dates:</label>
-      <input type="text" id="dates" name="dates" placeholder="e.g. July 10–17, 2025">
+          <label for="name">Full Name:</label>
+          <input type="text" id="name" name="name" required />
 
-      <label for="message">Message:</label>
-      <textarea id="message" name="message" rows="4"></textarea>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required />
 
-      <button type="submit">Send Request</button>
-    </form>
+          <label for="phone">Phone:</label>
+          <input type="tel" id="phone" name="phone" />
+
+          <label for="message">Comments:</label>
+          <textarea id="message" name="message"></textarea>
+
+          <button type="submit">Send Booking Request</button>
+        </form>
+      </div>
+      <div class="summary-section">
+        <h3>Reservation Summary</h3>
+        <p id="summary-dates">Dates: —</p>
+        <p id="summary-guests">Guests: 1</p>
+        <p id="summary-total">Total: €0</p>
+      </div>
+    </div>
   </div>
 
   <footer>
     &copy; 2025 Villa Agapi – Episkopi, Crete
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="booking.js"></script>
 </body>
 </html>

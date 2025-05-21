@@ -1,10 +1,12 @@
-export default async (req, res) => {
+const fetch = require("node-fetch");
+
+exports.handler = async function (event, context) {
   const icalUrl = "https://de.airbnb.com/calendar/ical/21743442.ics?s=6d92bff07fa069c7c0edcd887050d531";
 
   try {
     const response = await fetch(icalUrl);
     const icalData = await response.text();
-    const lines = icalData.split('\\n');
+    const lines = icalData.split('\n');
     const unavailable = [];
     let start = null;
 
@@ -25,9 +27,15 @@ export default async (req, res) => {
     }
 
     const deduped = [...new Set(unavailable)].sort();
-    res.status(200).json({ unavailable: deduped });
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ unavailable: deduped })
+    };
 
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch or parse Airbnb calendar." });
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Failed to fetch or parse Airbnb calendar." })
+    };
   }
 };

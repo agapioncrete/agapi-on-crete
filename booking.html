@@ -165,8 +165,6 @@
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
     const nightlyRate = 250;
-    const unavailableDates = ["2025-06-22", "2025-06-23"];
-
     const checkinInput = document.getElementById("checkin");
     const checkoutInput = document.getElementById("checkout");
     const guestsInput = document.getElementById("guests");
@@ -174,28 +172,12 @@
     const summaryGuests = document.getElementById("summary-guests");
     const summaryTotal = document.getElementById("summary-total");
 
-    flatpickr(checkinInput, {
-      dateFormat: "Y-m-d",
-      minDate: "today",
-      disable: unavailableDates,
-      onChange: updateSummary
-    });
-
-    flatpickr(checkoutInput, {
-      dateFormat: "Y-m-d",
-      minDate: "today",
-      disable: unavailableDates,
-      onChange: updateSummary
-    });
-
-    guestsInput.addEventListener("input", updateSummary);
-
     function updateSummary() {
       const checkinDate = new Date(checkinInput.value);
       const checkoutDate = new Date(checkoutInput.value);
       const guests = guestsInput.value || 1;
 
-      if (checkinDate && checkoutDate && checkoutDate > checkinDate) {
+      if (!isNaN(checkinDate) && !isNaN(checkoutDate) && checkoutDate > checkinDate) {
         const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
         const total = nights * nightlyRate;
         summaryDates.textContent = `Dates: ${checkinInput.value} to ${checkoutInput.value}`;
@@ -206,7 +188,49 @@
         summaryTotal.textContent = "Total: €0";
       }
     }
+
+    guestsInput.addEventListener("input", updateSummary);
+
+    fetch("/.netlify/functions/getUnavailableDates")
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        const unavailable = Array.isArray(data.unavailable)
+          ? data.unavailable.map(date => date.trim())
+          : [];
+
+        flatpickr(checkinInput, {
+          dateFormat: "Y-m-d",
+          minDate: "today",
+          disable: unavailable,
+          onChange: updateSummary
+        });
+
+        flatpickr(checkoutInput, {
+          dateFormat: "Y-m-d",
+          minDate: "today",
+          disable: unavailable,
+          onChange: updateSummary
+        });
+      })
+      .catch(error => {
+        console.error("Failed to load unavailable dates:", error);
+        flatpickr(checkinInput, {
+          dateFormat: "Y-m-d",
+          minDate: "today",
+          onChange: updateSummary
+        });
+
+        flatpickr(checkoutInput, {
+          dateFormat: "Y-m-d",
+          minDate: "today",
+          onChange: updateSummary
+        });
+      });
   </script>
 </body>
 </html>
+
 

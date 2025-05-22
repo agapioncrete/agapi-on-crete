@@ -153,8 +153,8 @@
     </nav>
   </header>
 
-  <div style="position: relative; width: 100%; padding-top: 50%; background-color: white; margin-top: 6rem; overflow: hidden;">
-  <video autoplay muted loop playsinline preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; animation: fadeIn 2s ease-in-out;">
+  <div id="introVideoWrapper" style="position: relative; width: 100%; padding-top: 50%; background-color: white; margin-top: 6rem; overflow: hidden;">
+  <video id="introVideo" autoplay muted playsinline preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; animation: fadeIn 2s ease-in-out;">
     <source src="images/Villaagapi-video.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
@@ -236,9 +236,20 @@
       currentIndex = (currentIndex - 1 + images.length) % images.length;
       showImage(currentIndex);
     }
-  </script>
+      const introVideo = document.getElementById('introVideo');
+    const introWrapper = document.getElementById('introVideoWrapper');
+    introVideo.onended = () => {
+  introWrapper.style.transition = 'all 1s ease';
+  introWrapper.style.transform = 'translateY(-100%)';
+  introWrapper.style.opacity = '0';
+  setTimeout(() => {
+    introWrapper.style.display = 'none';
+  }, 1000);
+};
+</script>
 </body>
 </html>
+
 
 
 
